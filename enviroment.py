@@ -35,13 +35,13 @@ class Vasuki(Env):
     def _init_agent_(self, score=0):
         # Creating a dictionary to store the information related to the agent
         agent = {}
-        # Set initial direction of head of the Snake  :  North = 0, East = 1, South = 2, West = 3
+        # Set initial direction of head of the Snake :  North = 0, East = 1, South = 2, West = 3
         agent['head'] = np.random.randint(low = 0, high = 4, size = (1)).item()
         # The score for each agent
         agent['score'] = score
         # Set initial position 
         agent['state'] = np.random.randint(low = 0, high = self.n, size = (2))
-        # Velocities for different sizes of the snake : Speed = 3 when size = 1x1, Speed = 2 when size = 1x2, Speed = 1 when size = 1x3
+        # Velocity of the snake
         agent['velocity'] = 1            
         # Returning the Agent Properties
         return agent
@@ -59,7 +59,7 @@ class Vasuki(Env):
         self.n = n
         self.rewards = rewards
         self.scale = 256//self.n
-        # Actions we can take left = 0, forward = 1, right = 2
+        # Actions we can take : left = 0, forward = 1, right = 2
         self.action_space = Discrete(3)
         # The nxn grid
         self.observation_space = MultiDiscrete([self.n, self.n])
@@ -93,28 +93,28 @@ class Vasuki(Env):
         # Applying the Action
         if action == 0: # Go Left
             if head==0:
-                if state[1]==velocity-1:
+                if state[1]==velocity-1: # Left Wall
                     illegal = 1
                     change = np.array([0, 0])
                 else:
                     change = np.array([0, -velocity])
                 head = 3
             elif head==1:
-                if state[0]==velocity-1:
+                if state[0]==velocity-1: # Top Wall
                     illegal = 1
                     change = np.array([0, 0])
                 else:
                     change = np.array([-velocity, 0])
                 head = 0
-            elif head==2:
-                if state[1]==n-velocity:
+            elif head==2: 
+                if state[1]==n-velocity: # Right Wall
                     illegal = 1
                     change = np.array([0, 0])
                 else:
                     change = np.array([0, velocity])
                 head = 1
             elif head==3:
-                if state[0]==n-velocity:
+                if state[0]==n-velocity: # Bottom Wall
                     illegal = 1
                     change = np.array([0, 0])
                 else:
@@ -122,28 +122,28 @@ class Vasuki(Env):
                 head = 2           
         elif action == 1: # Move Forward
             if head==0:
-                if state[0]==velocity-1:
+                if state[0]==velocity-1: # Top Wall
                     illegal = 1
                     change = np.array([0, 0])
                 else:
                     change = np.array([-velocity, 0])
                 head = 0
             elif head==1:
-                if state[1]==n-velocity:
+                if state[1]==n-velocity: # Right Wall
                     illegal = 1
                     change = np.array([0, 0])
                 else:
                     change = np.array([0, velocity])
                 head = 1
             elif head==2:
-                if state[0]==n-velocity:
+                if state[0]==n-velocity: # Bottom Wall
                     illegal = 1
                     change = np.array([0, 0])
                 else:
                     change = np.array([velocity, 0])
                 head = 2
             elif head==3:
-                if state[1]==velocity-1:
+                if state[1]==velocity-1: # Left Wall
                     illegal = 1
                     change = np.array([0, 0])
                 else:
@@ -151,28 +151,28 @@ class Vasuki(Env):
                 head = 3
         elif action == 2: # Go Right
             if head==0:
-                if state[1]==n-velocity:
+                if state[1]==n-velocity: # Right Wall
                     illegal = 1
                     change = np.array([0, 0])
                 else:
                     change = np.array([0, velocity])
                 head = 1
             elif head==1:
-                if state[0]==n-velocity:
+                if state[0]==n-velocity: # Bottom Wall
                     illegal = 1
                     change = np.array([0, 0])
                 else:
                     change = np.array([velocity, 0])
                 head = 2
             elif head==2:
-                if state[1]==velocity-1:
+                if state[1]==velocity-1: # Left Wall
                     illegal = 1
                     change = np.array([0, 0])
                 else:
                     change = np.array([0, -velocity])
                 head = 3
             elif head==3:
-                if state[0]==velocity-1:
+                if state[0]==velocity-1: # Top Wall
                     illegal = 1
                     change = np.array([0, 0])
                 else:
@@ -220,7 +220,7 @@ class Vasuki(Env):
         if (self.agentA['state'] == self.agentB['state']).all():
             if self.agentA['score'] > self.agentB['score']:
                 rewardA = 5 * abs( self.agentB['score']//(self.agentA['score']-self.agentB['score']) )
-                rewardB = 3 * abs( self.agentB['score']//(self.agentA['score']-self.agentB['score']) ) # -?
+                rewardB = 3 * abs( self.agentB['score']//(self.agentA['score']-self.agentB['score']) )
                 _ = self._reward_(self.agentA, illegalA)
                 score = self.agentB['score']
                 while True:
@@ -229,7 +229,7 @@ class Vasuki(Env):
                         _ = self._reward_(self.agentB, illegalB)
                         break
             elif self.agentA['score'] < self.agentB['score']:
-                rewardA = 3 * abs( self.agentA['score']//(self.agentA['score']-self.agentB['score']) ) # -?
+                rewardA = 3 * abs( self.agentA['score']//(self.agentA['score']-self.agentB['score']) )
                 rewardB = 5 * abs( self.agentA['score']//(self.agentA['score']-self.agentB['score']) )
                 _ = self._reward_(self.agentB, illegalB)
                 score = self.agentA['score']
@@ -239,8 +239,8 @@ class Vasuki(Env):
                         _ = self._reward_(self.agentA, illegalA)
                         break
             elif self.agentA['score'] == self.agentB['score']:
-                rewardA = abs(self.agentA['score']//2) # -?
-                rewardB = abs(self.agentB['score']//2) # -?
+                rewardA = abs(self.agentA['score']//2)
+                rewardB = abs(self.agentB['score']//2)
                 while True:
                     self.agentA = self._init_agent_(score=self.agentA['score'])
                     if (self.agentA['state']!=self.agentB['state']).all():
@@ -281,7 +281,7 @@ class Vasuki(Env):
             image = np.rot90(image.copy())
         return image
 
-    def render(self, actionA, actionB):
+    def render(self, actionA, actionB): # Returns a one-hot encoded state
         # Loading the states
         live_foodspawn_space_ = self.history[-2]["live_foodspawn_space"]
         agentA = self.history[-2]["agentA"]
@@ -334,7 +334,7 @@ class Vasuki(Env):
         # Returning the state
         return state
 
-    def encode(self): # Returns a one-hot encoded state
+    def encode(self):
         # Loading the states
         encoder = {'blank': 0, 'foodspawn_space': 1, 'agentA': 2, 'agentB': 3}
         state = np.zeros((self.n, self.n))
