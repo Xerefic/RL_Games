@@ -220,7 +220,7 @@ class Vasuki(Env):
         if (self.agentA['state'] == self.agentB['state']).all():
             if self.agentA['score'] > self.agentB['score']:
                 rewardA = 5 * abs( self.agentB['score']//(self.agentA['score']-self.agentB['score']) )
-                rewardB = 3 * abs( self.agentB['score']//(self.agentA['score']-self.agentB['score']) )
+                rewardB = 3 * abs( self.agentB['score']//(self.agentA['score']-self.agentB['score']) ) # -?
                 _ = self._reward_(self.agentA, illegalA)
                 score = self.agentB['score']
                 while True:
@@ -229,7 +229,7 @@ class Vasuki(Env):
                         _ = self._reward_(self.agentB, illegalB)
                         break
             elif self.agentA['score'] < self.agentB['score']:
-                rewardA = 3 * abs( self.agentA['score']//(self.agentA['score']-self.agentB['score']) )
+                rewardA = 3 * abs( self.agentA['score']//(self.agentA['score']-self.agentB['score']) ) # -?
                 rewardB = 5 * abs( self.agentA['score']//(self.agentA['score']-self.agentB['score']) )
                 _ = self._reward_(self.agentB, illegalB)
                 score = self.agentA['score']
@@ -239,8 +239,8 @@ class Vasuki(Env):
                         _ = self._reward_(self.agentA, illegalA)
                         break
             elif self.agentA['score'] == self.agentB['score']:
-                rewardA = abs(self.agentA['score']//2)
-                rewardB = abs(self.agentB['score']//2)
+                rewardA = abs(self.agentA['score']//2) # -?
+                rewardB = abs(self.agentB['score']//2) # -?
                 while True:
                     self.agentA = self._init_agent_(score=self.agentA['score'])
                     if (self.agentA['state']!=self.agentB['state']).all():

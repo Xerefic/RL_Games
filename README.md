@@ -14,36 +14,42 @@ As a part of Shaastra 2022, RL games is a team competition where participants co
 - Link to notebook: [![Open All Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1B-Ohlwsehrg_eJwAeVQZM8ZmzO5GBrNn?usp=sharing)
 - [Envorionment](environment.py)
 
+## Game Description
+
+The environment consists of two snakes (agents) and `n/2` food locations at any instant. The snakes (agents) can move in three directions; namely left, right and straight ahead. The objective of the game is to possess a greater score than the opponent either by consuming the food or by colliding with the opponent. A breief description on the environment is given below:
+
 ### State Space:
-- n*n Grid (Continious Space).
-- At any instant of time, n random coordinates out of 2n fixed coordinates have food.
+- The state space is characterised by a n*n Grid (Continious Space).
+- At any instant of time, `n/2` random coordinates out of `n` fixed coordinates possess food.
 
 ### Action Space:
-- Move forward by v blocks in 1 second.
-- Decide to turn right or left for the next timestep.
+- The agent may choose one of the three possible moves; left, right, forward at any instant.
+- Depending on the position of the agent, the move may or may not be executed.
+	- For instance, if the agent lies on the first row and is facing North, and decides to move left, the move will be determined illegal and the agent will not be displaced. Although the move does not take place, the agent will be turned to face West.
+	- That is, the agent will first turn to left and then try to move. Since the move is illegal, the agent stays put.
+
 
 ### Rules:
-	1. The agent must eat the food to grow.
-	2. If the agent collides with the opponent:
-		Let s1 and s2 be the scores of the two agents. 
-		If s1>s2, s1 -> s1 + s2/3 and s2 -> s2/2
-	3. After collison, the agent with the lesser score is randomly respawned.
-	4. The dimensions of the agent is directly proportional to the score it possess at any instant.
-		If s < 10 -> 1*1
-		If 10 < s < 20 -> 1*2
-		If 20 < s < 30 -> 1*3 ...
+1. The agent must eat the food to grow.
+2. If the agent collides with the opponent:
+	- Let `s1` and `s2` be the scores of the two agents. 
+	- If `s1 > s2`, `r1 = 5 s2/(s1-s2)` and `r2 = -3 s2/(s1-s2)`
+	- If `s1 < s2`, `r1 = -3 s1/(s2-s1)` and `r2 = 5 s1/(s2-s1)`
+3. After collison, the agent with the lesser score is randomly respawned.
 
 ### Reward System:
-- (-1) for legal moves
-- (-2) for illegal moves
-- (+4) for consuming food
-- (+s/3) or (-s/2) for collision
+- `-1` for legal moves
+- `-2` for illegal moves
+- `+4` for consuming food
+- Collision
+	- If `s1 > s2`, `r1 = 5 s2/(s1-s2)` and `r2 = -3 s2/(s1-s2)`
+	- If `s1 <s 2`, `r1 = -3 s1/(s2-s2)` and `r2 = 5 s1/(s2-s1)`
 
 ### Evaluation Metric:
-- Every game lasts for a maximum of max_iter=1000 iterations.
+- Every game lasts for a maximum of `game_length = 100` iterations.
 - The agent with the greater score wins the game.
 
-- Play max_games=100 games against the opponent.
+- Play `runs = 1000` games against the opponent.
 - The agent with higher number of victories wins the bracket.
 
 ### Visualisation:
