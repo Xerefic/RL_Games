@@ -12,7 +12,7 @@ As a part of Shaastra 2022, RL games is a team competition where participants co
 ## Scripts
 
 - Link to notebook: [![Open All Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1B-Ohlwsehrg_eJwAeVQZM8ZmzO5GBrNn?usp=sharing)
-- [Envorionment](environment.py)
+- [Environment](environment.py)
 
 ## Game Description
 
