@@ -5,7 +5,7 @@
 
 Are you fed up with friends snakes betraying you? This is your chance to redeem yourself and rise above the rest to crown yourself as the King of the Snakes Vasuki!
 
-We present to you RL Games, an arena where you will find only blood and venom. Create your own bot to fight against the best of the best bots. With a cash prize pool of INR 25K, what more do you need?
+We present to you RL Games, an arena where you will find only blood and venom. Create your bot using Reinforcement Learning techniques to fight against the best of the best bots. With a cash prize pool of INR 25K, what more do you need?
 
 As a part of Shaastra 2022, RL games is a team competition where participants compete to find the best policy to a given environment using reinforcement learning methods. Do check out our [website](www.shaastra.org) for other exciting opportunities!
 
