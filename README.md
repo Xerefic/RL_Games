@@ -16,7 +16,9 @@ As a part of Shaastra 2022, RL games is a team competition where participants co
 
 ## Game Description
 
-The environment consists of two snakes (agents) and `n/2` food locations at any instant. The snakes (agents) can move in three directions; namely left, right and straight ahead. The objective of the game is to possess a greater score than the opponent either by consuming the food or by colliding with the opponent. A breief description on the environment is given below:
+The environment consists of two snakes (agents) and `n/2` food locations at any instant. The snakes (agents) can move in three directions; namely **left**, **right** or **straight** ahead. The objective of the game is to possess a greater score than the opponent either by consuming the food or by colliding with the opponent.
+
+A breief description on the environment is given below:
 
 ### State Space:
 - The state space is characterised by a `n x n` Grid (Continious Space).
@@ -54,5 +56,5 @@ The environment consists of two snakes (agents) and `n/2` food locations at any 
 
 ### Visualisation:
 
-![caption](https://user-images.githubusercontent.com/80670240/126877788-2e90d653-4c93-4ee8-bacf-8ff299d8bbb9.mp4)
+![VIDEO](https://user-images.githubusercontent.com/80670240/126877788-2e90d653-4c93-4ee8-bacf-8ff299d8bbb9.mp4)
 
