@@ -68,7 +68,7 @@ class Runner():
         elif self.env.agentB['score'] > self.env.agentA['score']:
             self.winner['Player_B'] += 1
         # Generates a video simulation of the game
-        if number%100==0:
+        if run%100==0:
             aviname = os.path.join(self.checkpoint, f"game_{run}.avi")
             mp4name = os.path.join(self.checkpoint, f"game_{run}.mp4")
             w, h, _ = video[0].shape
